@@ -134,14 +134,14 @@ public class MyServlet extends HttpServlet {
         }
     }
 
-    private static void addDoc(IndexWriter w, String Class, String number, String time, String department) throws IOException {
+    private static void addDoc(IndexWriter w, String Name, String age, String Gender, String Race) throws IOException {
         Document doc = new Document();
         // A text field will be tokenized
-        doc.add(new TextField("Classes", Class, Field.Store.YES));
+        doc.add(new TextField("Classes", Name, Field.Store.YES));
         // We use a string field for isbn because we don\'t want it tokenized
-        doc.add(new StringField("Number", number, Field.Store.YES));
-        doc.add(new StringField("Time", time, Field.Store.YES));
-        doc.add(new StringField("Department", department, Field.Store.YES));
+        doc.add(new StringField("Number", Gender, Field.Store.YES));
+        doc.add(new StringField("Time", age, Field.Store.YES));
+        doc.add(new StringField("Department", Race, Field.Store.YES));
         w.addDocument(doc);
     }
 
