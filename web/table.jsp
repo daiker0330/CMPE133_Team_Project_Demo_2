@@ -1,5 +1,5 @@
 <%@page import="java.util.List"%>
-<%@page import="Lab6.Course"%>
+<%@page import="Demo2.Child"%>
 <html class="no-js">
     <head>
         <meta charset="utf-8">
@@ -24,7 +24,7 @@
             <div class="admin-content">
 
                 <div class="am-cf am-padding">
-                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Course List</strong></div>
+                    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">Children List</strong></div>
                 </div>
 
                 <div class="am-g">
@@ -33,10 +33,10 @@
                             <table class="am-table am-table-striped am-table-hover table-main">
                                 <thead>
                                     <tr>
-                                        <th class="table-id">ID</th>
+                                        <th class="table-id">Age</th>
                                         <th class="table-title">Name</th>
-                                        <th class="table-type">Department</th>
-                                        <th class="table-type">Time</th>
+                                        <th class="table-type">Gender</th>
+                                        <th class="table-type">Race</th>
                                         <th class="table-set">Operation</th>
                                     </tr>
                                 </thead>
@@ -46,7 +46,7 @@
                                         courses = (List) request.getAttribute("course");
                                         if (courses != null) {
                                             for (int i = 0; i < courses.size(); i++) {
-                                                Course c = (Course) courses.get(i);
+                                                Child c = (Child) courses.get(i);
                                     %>
                                     <tr>
                                         <td><%=c.getNumber()%></td>
@@ -57,11 +57,11 @@
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
                                                     <form action="MyServlet" method="get">
-                                                        <input type="hidden" name="func" value="enroll">
+                                                        <input type="hidden" name="func" value="adopt">
                                                         <input type="hidden" name="id" value="<%=c.getNumber()%>">
                                                         <input type="hidden" name="name" value="<%=c.getName()%>">
                                                         <input type="hidden" name="description" value="<%=c.toString()%>">
-                                                        <input type="submit" name="" value="enroll">
+                                                        <input type="submit" name="" value="adopt">
                                                     </form>
                                                 </div>
                                             </div>

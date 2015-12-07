@@ -60,7 +60,7 @@ public class MyServlet extends HttpServlet {
     StandardAnalyzer analyzer;
     IndexWriterConfig config;
     Directory index;
-    Certification log;
+    SearchHistory log;
     ArrayList<Family> stds = new ArrayList<Family>();
     ArrayList<Orphanage> tchs = new ArrayList<Orphanage>();
     Family currentStudent;
@@ -82,7 +82,7 @@ public class MyServlet extends HttpServlet {
             addDoc(w, " System Security with Java", "CS 166:", "Mon.", "Computer Science");
             addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
             w.close();
-            log = new Certification();
+            log = new SearchHistory();
             for(int i=1;i<=10;i++){
                 Family std = new Family();
                 std.setUserName("std"+i);
@@ -111,19 +111,19 @@ public class MyServlet extends HttpServlet {
                 gotoSearch(out, request, response);
             } else if (request.getParameter("func").equals("login")) {
                 gotoLogin(out, request, response);
-            } else if (request.getParameter("func").equals("enroll")) {
-                gotoEnroll(out, request, response);
-            } else if (request.getParameter("func").equals("addCourse")) {
-                gotoAddCourse(out, request, response);
+            } else if (request.getParameter("func").equals("adopt")) {
+                gotoAdopt(out, request, response);
+            } else if (request.getParameter("func").equals("addChild")) {
+                gotoAddChild(out, request, response);
             } else if (request.getParameter("func").equals("log")) {
                 String msg = log.printHistory();
-                String title = "Log";
+                String title = "Custody";
                 gotoMsg(out, request, response, title, msg);
             } else if (request.getParameter("func").equals("clear")) {
                 currentStudent.getEnroll().getArr().clear();
                 currentStudent.getSchedule().getArr().clear();
-                String msg = "Clear Schedule Success";
-                String title = "Clear Schedule";
+                String msg = "Clear Custody Success";
+                String title = "Clear Custody";
                 gotoMsg(out, request, response, title, msg);
             }
             else {
@@ -232,7 +232,7 @@ public class MyServlet extends HttpServlet {
         }
     }
 
-    private void gotoEnroll(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
+    private void gotoAdopt(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         if (currentStudent != null) {
             for (int i = 0; i < courseList.size(); i++) {
                 Child c = (Child) courseList.get(i);
@@ -242,27 +242,27 @@ public class MyServlet extends HttpServlet {
                     if (currentStudent.getRule().check(arr)) {
                         currentStudent.getEnroll().addCourse(c);
                         currentStudent.getSchedule().addCourse(c);
-                        String msg = "You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("name");
-                        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
-                        String title = "Enroll Success";
+                        String msg = "You have adopted " + request.getParameter("id") + ": " + request.getParameter("name");
+                        msg+= "<hr>Adopted Children<br>" + currentStudent.getSchedule().print();
+                        String title = "Adotp Success";
                         gotoMsg(out, request, response, title, msg);
                     } else {
-                        String msg = "You cannot enroll in " + request.getParameter("id") + ": "
-                                + request.getParameter("name") + "<br>Since you have already enrolled in 4 courses";
-                        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
-                        String title = "Enroll Failed";
+                        String msg = "You cannot adotp in " + request.getParameter("id") + ": "
+                                + request.getParameter("name") + "<br>Since you have already adopted in 4 children";
+                        msg+= "<hr>Adopted Children<br>" + currentStudent.getSchedule().print();
+                        String title = "Adotp Failed";
                         gotoMsg(out, request, response, title, msg);
                     }
                 }
             }
         }
-        String msg = "You cannot enroll in " + request.getParameter("id") + ": " + request.getParameter("name");
-        String title = "Enroll Failed";
-        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
+        String msg = "You cannot adotp in " + request.getParameter("id") + ": " + request.getParameter("name");
+        String title = "Adotp Failed";
+        msg+= "<hr>Adopted Children<br>" + currentStudent.getSchedule().print();
         gotoMsg(out, request, response, title, msg);
     }
 
-    private void gotoAddCourse(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
+    private void gotoAddChild(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         String id = request.getParameter("id");
         String department = request.getParameter("department");
@@ -276,8 +276,8 @@ public class MyServlet extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        String msg = "Create course success";
-        String title = "Create course success";
+        String msg = "Add child success";
+        String title = "Add child success";
         gotoMsg(out, request, response, title, msg);
     }
 
